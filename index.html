@@ -1,0 +1,28 @@
+<html>
+<head>
+    <link rel="stylesheet" href="static/timetablejs.css">
+    <script src="static/timetable.js"></script>
+</head>
+<body>
+    
+<div class="timetable"></div>
+    
+<script>
+var timetable = new Timetable();
+    timetable.setScope(7, 20);
+    timetable.useTwelveHour();
+    
+    timetable.addLocations(['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه']);
+    
+    timetable.addEvent('تربیت‌بدنی', 'شنبه', new Date(2015,7,17,10,45), new Date(2015,7,17,12,30));
+    // a for loop in JSON array
+    var renderer = new Timetable.Renderer(timetable);
+    renderer.draw('.timetable'); // any css selector
+   
+    
+</script> 
+</body>
+
+
+
+</html>
