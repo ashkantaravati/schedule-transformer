@@ -8,17 +8,33 @@
 <div class="timetable"></div>
     
 <script>
-var timetable = new Timetable();
+    // Set up our HTTP request
+let xhr = new XMLHttpRequest();
+let data;
+let timetable = new Timetable();
     timetable.setScope(7, 20);
     timetable.useTwelveHour();
-    
     timetable.addLocations(['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه']);
-    
-    timetable.addEvent('تربیت‌بدنی', 'شنبه', new Date(2015,7,17,10,45), new Date(2015,7,17,12,30));
-    // a for loop in JSON array
-    var renderer = new Timetable.Renderer(timetable);
-    renderer.draw('.timetable'); // any css selector
-   
+xhr.onload = function () {
+
+	if (xhr.status >= 200 && xhr.status < 300) {
+		console.log('success!', xhr);
+        data = JSON.parse(xhr.responseText);
+        for (let i=0; i<data.length;i++)
+        {
+            let event = data[i];
+            if(event.start===null) continue;
+            timetable.addEvent( event.summary, event.weekday, new Date(event.start), new Date(event.end));
+        }
+        let renderer = new Timetable.Renderer(timetable);
+        renderer.draw('.timetable');
+	} else {
+		console.log('The request failed!');
+	}
+	console.log('This always runs...');
+};
+xhr.open('GET', 'result.json');
+xhr.send();
     
 </script> 
 </body>

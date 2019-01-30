@@ -19,21 +19,23 @@ class Course {
         this.location = location;
         
     }
-    getSummary() {
+    get info() {
         let text = `${this.title}|${this.teacher}|${this.location}`;
         return text;
     }
-    getDayOfWeekText() {
+    get weekday() {
         return dayOfWeek.get(this.dayOfWeek);
     }
     getTimetableFormat() {
-        let dayOfWeek = this.getDayOfWeekText();
-        let summary = this.getSummary();
-        let obj = { dayOfWeek,
-               summary,
-               this.start,
-               this.end };
+        let obj = { 
+               weekday:this.weekday,
+               summary:this.info,
+               start:this.start,
+               end:this.end
+                  }
         return obj;
         
     }
 }
+
+module.exports = Course;

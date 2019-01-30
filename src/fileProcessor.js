@@ -2,7 +2,7 @@ const fs = require('fs');
 const JSSoup = require('jssoup').default;
 const sanitizeHtml = require('sanitize-html');
 const Papa = require('papaparse');
-var Course = require('./course');
+const Course = require('./course');
 
 function processFileAsync(fileName) {
     fs.readFile(fileName, 'utf8', function (err, data) {
