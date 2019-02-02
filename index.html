@@ -1,42 +1,72 @@
 <html>
+
 <head>
+    <title>Schedule Transformer</title>
     <link rel="stylesheet" href="static/timetablejs.css">
     <script src="static/timetable.js"></script>
 </head>
-<body>
-    
-<div class="timetable"></div>
-    
-<script>
-    // Set up our HTTP request
-let xhr = new XMLHttpRequest();
-let data;
-let timetable = new Timetable();
-    timetable.setScope(7, 20);
-    timetable.useTwelveHour();
-    timetable.addLocations(['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه']);
-xhr.onload = function () {
 
-	if (xhr.status >= 200 && xhr.status < 300) {
-		console.log('success!', xhr);
-        data = JSON.parse(xhr.responseText);
-        for (let i=0; i<data.length;i++)
-        {
-            let event = data[i];
-            if(event.start===null) continue;
-            timetable.addEvent( event.summary, event.weekday, new Date(event.start), new Date(event.end));
-        }
-        let renderer = new Timetable.Renderer(timetable);
-        renderer.draw('.timetable');
-	} else {
-		console.log('The request failed!');
-	}
-	console.log('This always runs...');
-};
-xhr.open('GET', 'result.json');
-xhr.send();
-    
-</script> 
+<body>
+    <form id="ajax-upload" action="/upload" method="post">
+        فایل برنامه هفتگی: <input type="file" name="schedule">
+        <!--        <input type="hidden" name="someParam" value="someValue" />-->
+        <button type="submit">بارگذاری </button>
+    </form>
+    <div class="timetable"></div>
+
+    <script>
+        let resData;
+        let reqData;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('ajax-upload').addEventListener("submit", function(e) {
+                e.preventDefault()
+                let form = e.target
+                reqData = new FormData(e.target)
+                let request = new XMLHttpRequest()
+
+                request.onreadystatechange = function() {
+                    if (request.status === 200) {
+
+                        let timetable = new Timetable();
+                        timetable.setScope(7, 21);
+                        timetable.useTwelveHour();
+                        timetable.addLocations(['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه']);
+                        resData = JSON.parse(request.responseText);
+                        for (let i = 0; i < resData.length; i++) {
+                            let event = resData[i];
+                            if (event.start === null) continue;
+                            timetable.addEvent(event.summary, event.weekday, new Date(event.start), new Date(event.end));
+                        }
+                        let renderer = new Timetable.Renderer(timetable);
+                        renderer.draw('.timetable');
+                    } else {
+                        console.log("error :" + request);
+                    }
+                }
+
+                request.open(form.method, form.action)
+                request.send(reqData)
+            })
+        })
+
+        // Set up our HTTP request
+
+
+        //xhr.onload = function () {
+        //
+        //	if (xhr.status >= 200 && xhr.status < 300) {
+        //		console.log('success!', xhr);
+        //        
+        //	} else {
+        //		console.log('The request failed!');
+        //	}
+        //	console.log('This always runs...');
+        //};
+        //xhr.open('POST', 'result.json');
+        //xhr.send();
+
+    </script>
 </body>
 
 

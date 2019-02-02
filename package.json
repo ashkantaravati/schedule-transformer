@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "express": "^4.16.4",
+    "express-fileupload": "^1.1.1-alpha.1",
     "jssoup": "0.0.10",
     "moment": "^2.24.0",
     "papaparse": "^4.6.3",
