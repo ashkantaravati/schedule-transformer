@@ -13,7 +13,6 @@ app.use(fileUpload());
 app.use('/static', express.static('static'))
 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/index.html')));
-app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/index.html')));
 app.post('/upload', function (req, res) {
     let uploadedSchedule = req.files.schedule;
     let decoder = new StringDecoder('utf8');

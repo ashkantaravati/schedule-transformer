@@ -27,7 +27,7 @@ function sheduleProcessor(inputBuffer) {
     for (let i = 1; i < rows.length; i++) {
         let row = rows[i];
         let fields = row.contents;
-        console.log(fields);
+        //        console.log(fields);
         let title = fields[0].text;
         let descriptions = '';
         let day;
@@ -54,7 +54,7 @@ function sheduleProcessor(inputBuffer) {
             code = dataArray[0].split(':')[1].replace(/\s+/g, '');
             // time is like "time: 12:33 9:55"
             let time = dataArray[1];
-            console.log(time);
+            //            console.log(time);
             timeMatches = timePattern.exec(time)
             //                time = dataArray[1].split(':');
             startTime = timeMatches[1];

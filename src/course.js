@@ -1,4 +1,4 @@
-const moment = require('moment');
+//const moment = require('moment');
 var dayOfWeek = new Map()
 dayOfWeek.set(0, "شنبه");
 dayOfWeek.set(1, "یکشنبه");
@@ -7,17 +7,19 @@ dayOfWeek.set(3, "سه‌شنبه");
 dayOfWeek.set(4, "چهارشنبه");
 dayOfWeek.set(5, "پنجشنبه");
 dayOfWeek.set(6, "جمعه");
-    
-  
+
+
 class Course {
     constructor(dayOfWeek, title, teacher, start, end, location) {
         this.dayOfWeek = dayOfWeek;
         this.title = title;
         this.teacher = teacher;
-        this.start = moment(start, 'HH:mm').toDate();
-        this.end = moment(end, 'HH:mm').toDate();
+        //        this.start = moment(start, 'HH:mm').toDate();
+        //        this.end = moment(end, 'HH:mm').toDate();
+        this.start = start;
+        this.end = end;
         this.location = location;
-        
+
     }
     get info() {
         let text = `${this.title}|${this.teacher}|${this.location}`;
@@ -27,14 +29,14 @@ class Course {
         return dayOfWeek.get(this.dayOfWeek);
     }
     getTimetableFormat() {
-        let obj = { 
-               weekday:this.weekday,
-               summary:this.info,
-               start:this.start,
-               end:this.end
-                  }
+        let obj = {
+            weekday: this.weekday,
+            summary: this.info,
+            start: this.start,
+            end: this.end
+        }
         return obj;
-        
+
     }
 }
 
